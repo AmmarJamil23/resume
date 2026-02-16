@@ -62,3 +62,14 @@ jobs:
           context: ./server
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/resume-backend:latest
+
+
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/Desktop/MDN/resume/server
+            ./deploy.sh
